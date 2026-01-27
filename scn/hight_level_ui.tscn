@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmj3k04r4ch06"]
+
+[ext_resource type="Script" uid="uid://cvx7nqkbnvo7l" path="res://scripts/hight_level_ui.gd" id="1_iq0sv"]
+
+[node name="HightLevelUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iq0sv")
+
+[node name="VBC" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -81.5
+offset_right = 170.0
+offset_bottom = 81.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBC" type="HBoxContainer" parent="VBC"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBC/HBC"]
+layout_mode = 2
+text = "ippaddres"
+
+[node name="ipadresInput" type="LineEdit" parent="VBC/HBC"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBC2" type="HBoxContainer" parent="VBC"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBC/HBC2"]
+layout_mode = 2
+text = "name"
+
+[node name="nameInput" type="LineEdit" parent="VBC/HBC2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "bot"
+
+[node name="Server" type="Button" parent="VBC"]
+layout_mode = 2
+text = "SERVER"
+
+[node name="Client" type="Button" parent="VBC"]
+layout_mode = 2
+text = "CLIENT
+"
+
+[node name="NameLabel" type="Label" parent="VBC"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Твоё имя: "
+
+[connection signal="text_changed" from="VBC/HBC/ipadresInput" to="." method="_on_ipadres_input_text_changed"]
+[connection signal="text_submitted" from="VBC/HBC/ipadresInput" to="." method="_on_ipadres_input_text_submitted"]
+[connection signal="text_changed" from="VBC/HBC2/nameInput" to="." method="_on_name_input_text_changed"]
+[connection signal="text_submitted" from="VBC/HBC2/nameInput" to="." method="_on_name_input_text_submitted"]
+[connection signal="pressed" from="VBC/Server" to="." method="_on_server_pressed"]
+[connection signal="pressed" from="VBC/Client" to="." method="_on_client_pressed"]

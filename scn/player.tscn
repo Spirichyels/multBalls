@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://c6fe1ciip2exe"]
+
+[ext_resource type="Texture2D" uid="uid://dsrmvag47b5li" path="res://icon.svg" id="1_386vx"]
+[ext_resource type="Script" uid="uid://biiyqo03om8cl" path="res://scripts/player.gd" id="1_dltx8"]
+[ext_resource type="Texture2D" uid="uid://bddyuuqm1dik5" path="res://assets/Balls/balls-Sheet.png" id="2_diy2p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eoiiq"]
+atlas = ExtResource("2_diy2p")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v80w"]
+atlas = ExtResource("2_diy2p")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkges"]
+atlas = ExtResource("2_diy2p")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1cso"]
+atlas = ExtResource("2_diy2p")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_37kko"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eoiiq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v80w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkges")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1cso")
+}],
+"loop": true,
+"name": &"ball",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dltx8"]
+radius = 16.51617
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_diy2p"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("player_name_label:text")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:spawn_count")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(646, 343)
+scale = Vector2(2.1200001, 2.1200001)
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_dltx8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_37kko")
+animation = &"ball"
+autoplay = "ball"
+frame_progress = 0.85807
+
+[node name="icon" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.265625, 0.265625)
+texture = ExtResource("1_386vx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dltx8")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_diy2p")
+
+[node name="player_name_label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -36.792454
+offset_top = -33.490562
+offset_right = 363.20755
+offset_bottom = -5.4905624
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 20
+text = "botfghfghfghfghfghfghfghfgfdgdfgdfgdf"
+horizontal_alignment = 1

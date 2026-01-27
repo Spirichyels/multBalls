@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=4 uid="uid://d1s27dsja87si"]
+
+[ext_resource type="PackedScene" uid="uid://dmj3k04r4ch06" path="res://scn/hight_level_ui.tscn" id="1_qwfic"]
+[ext_resource type="Script" uid="uid://csrswr52746k0" path="res://scripts/hight_level_multiplayer_spawner.gd" id="2_4nqwb"]
+[ext_resource type="PackedScene" uid="uid://c6fe1ciip2exe" path="res://scn/player.tscn" id="3_4nqwb"]
+[ext_resource type="PackedScene" uid="uid://dxsccjfemldiv" path="res://scn/wall.tscn" id="4_toum1"]
+[ext_resource type="Texture2D" uid="uid://cew4a2qgjnpew" path="res://assets/Walls/ship.png" id="5_hddet"]
+[ext_resource type="Script" uid="uid://s12ekygrudbd" path="res://scn/fall_zone.gd" id="6_hddet"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlsof"]
+texture = ExtResource("5_hddet")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ndluo"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_jlsof")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hddet"]
+size = Vector2(30.99997, 1277)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_toum1"]
+size = Vector2(27, 721)
+
+[node name="HightLevelExample" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HightLevelUI" parent="CanvasLayer" instance=ExtResource("1_qwfic")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://c6fe1ciip2exe")
+spawn_path = NodePath("..")
+script = ExtResource("2_4nqwb")
+network_player = ExtResource("3_4nqwb")
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="Walls" type="Node2D" parent="."]
+visible = false
+
+[node name="wall" parent="Walls" instance=ExtResource("4_toum1")]
+position = Vector2(61, 58)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAABABUAAAAAAAAAAAACABUAAAAAAAAAAAADABUAAAAAAAAAAAAEABUAAAAAAAAAAAAFABUAAAAAAAAAAAAGABUAAAAAAAAAAAAHABUAAAAAAAAAAAAIABUAAAAAAAAAAAAJABUAAAAAAAAAAAAKABUAAAAAAAAAAAALABUAAAAAAAAAAAAMABUAAAAAAAAAAAANABUAAAAAAAAAAAAOABUAAAAAAAAAAAAPABUAAAAAAAAAAAAQABUAAAAAAAAAAAARABUAAAAAAAAAAAASABUAAAAAAAAAAAATABUAAAAAAAAAAAAUABUAAAAAAAAAAAAVABUAAAAAAAAAAAAWABUAAAAAAAAAAAAXABUAAAAAAAAAAAAYABUAAAAAAAAAAAAZABUAAAAAAAAAAAAaABUAAAAAAAAAAAAbABUAAAAAAAAAAAAcABUAAAAAAAAAAAAdABUAAAAAAAAAAAAeABUAAAAAAAAAAAAfABUAAAAAAAAAAAAgABUAAAAAAAAAAAAhABUAAAAAAAAAAAAiABUAAAAAAAAAAAAjABUAAAAAAAAAAAAkABUAAAAAAAAAAAAlABUAAAAAAAAAAAAmABUAAAAAAAAAAAAAAAEAAAAAAAAAAFAAAAIAAAAAAAAAAFAAAAMAAAAAAAAAAFAAAAQAAAAAAAAAAFAAAAUAAAAAAAAAAFAAAAYAAAAAAAAAAFAAAAcAAAAAAAAAAFAAAAgAAAAAAAAAAFAAAAkAAAAAAAAAAFAAAAoAAAAAAAAAAFAAAAsAAAAAAAAAAFAAAAwAAAAAAAAAAFAAAA0AAAAAAAAAAFAAAA4AAAAAAAAAAFAAAA8AAAAAAAAAAFAAABAAAAAAAAAAAFAAABEAAAAAAAAAAFAAABIAAAAAAAAAAFAAABMAAAAAAAAAAFAAABQAAAAAAAAAAFAnAAEAAAAAAAAAAGAnAAIAAAAAAAAAAGAnAAMAAAAAAAAAAGAnAAQAAAAAAAAAAGAnAAUAAAAAAAAAAGAnAAYAAAAAAAAAAGAnAAcAAAAAAAAAAGAnAAgAAAAAAAAAAGAnAAkAAAAAAAAAAGAnAAoAAAAAAAAAAGAnAAsAAAAAAAAAAGAnAAwAAAAAAAAAAGAnAA0AAAAAAAAAAGAnAA4AAAAAAAAAAGAnAA8AAAAAAAAAAGAnABAAAAAAAAAAAGAnABEAAAAAAAAAAGAnABIAAAAAAAAAAGAnABMAAAAAAAAAAGAnABQAAAAAAAAAAGABAAAAAAAAAAAAADACAAAAAAAAAAAAADADAAAAAAAAAAAAADAEAAAAAAAAAAAAADAFAAAAAAAAAAAAADAGAAAAAAAAAAAAADAHAAAAAAAAAAAAADAIAAAAAAAAAAAAADAJAAAAAAAAAAAAADAKAAAAAAAAAAAAADALAAAAAAAAAAAAADAMAAAAAAAAAAAAADANAAAAAAAAAAAAADAOAAAAAAAAAAAAADAPAAAAAAAAAAAAADAQAAAAAAAAAAAAADARAAAAAAAAAAAAADASAAAAAAAAAAAAADATAAAAAAAAAAAAADAUAAAAAAAAAAAAADAVAAAAAAAAAAAAADAWAAAAAAAAAAAAADAXAAAAAAAAAAAAADAYAAAAAAAAAAAAADAZAAAAAAAAAAAAADAaAAAAAAAAAAAAADAbAAAAAAAAAAAAADAcAAAAAAAAAAAAADAdAAAAAAAAAAAAADAeAAAAAAAAAAAAADAfAAAAAAAAAAAAADAgAAAAAAAAAAAAADAhAAAAAAAAAAAAADAiAAAAAAAAAAAAADAjAAAAAAAAAAAAADAkAAAAAAAAAAAAADAlAAAAAAAAAAAAADAmAAAAAAAAAAAAADA=")
+tile_set = SubResource("TileSet_ndluo")
+
+[node name="fallZone" type="Node2D" parent="."]
+script = ExtResource("6_hddet")
+
+[node name="Area2D4" type="Area2D" parent="fallZone"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D4"]
+light_mask = 2
+position = Vector2(640, 690)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_hddet")
+
+[node name="Area2D3" type="Area2D" parent="fallZone"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D3"]
+light_mask = 2
+position = Vector2(638.5, 14.500015)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_hddet")
+
+[node name="Area2D2" type="Area2D" parent="fallZone"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D2"]
+light_mask = 2
+position = Vector2(1267, 360)
+shape = SubResource("RectangleShape2D_toum1")
+
+[node name="Area2D1" type="Area2D" parent="fallZone"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D1"]
+light_mask = 2
+position = Vector2(12.5, 359.5)
+shape = SubResource("RectangleShape2D_toum1")
+
+[connection signal="body_entered" from="fallZone/Area2D4" to="fallZone" method="_on_area_2d_4_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D3" to="fallZone" method="_on_area_2d_3_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D2" to="fallZone" method="_on_area_2d_2_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D1" to="fallZone" method="_on_area_2d_1_body_entered"]
