@@ -22,7 +22,10 @@ const SKINS = {
 
 @export var spawn_count = 1
 
-@export var skin_id = -1
+@export var skin_id = -1:
+	set(value):
+		skin_id = value
+		print("я изменился: ", skin_id)
 
 
 
@@ -34,6 +37,7 @@ func _ready() -> void:
 	
 	position.x = randi() % 1000 + 100
 	position.y = randi() % 520 + 100
+	print(multiplayer.get_unique_id(), ": ",player_name_label.text, " : ", skin_id)
 	
 
 

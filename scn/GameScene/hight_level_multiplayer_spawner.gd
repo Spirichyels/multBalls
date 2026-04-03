@@ -12,6 +12,8 @@ func spawn_player(id):
 	if !multiplayer.is_server(): return
 	var player = network_player.instantiate()
 	player.name = str(id)
+	player.skin_id = 1
+	
 	get_node(spawn_path).add_child(player)
 	players[id] = player
 	player.set_skin.rpc(1)
@@ -27,6 +29,7 @@ func receive_player(id, skin_id):
 	print("receive_player: создаю игрока", id, "скин", skin_id)
 	var player = network_player.instantiate()
 	player.name = str(id)
+	player.skin_id = 1
 	get_node(spawn_path).add_child(player)
 	players[id] = player
 	player.set_skin(skin_id)  # <- ЭТО ДОЛЖНО БЫТЬ
