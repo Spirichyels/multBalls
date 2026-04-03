@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=4 uid="uid://d1s27dsja87si"]
+[gd_scene load_steps=11 format=4 uid="uid://d1s27dsja87si"]
 
 [ext_resource type="PackedScene" uid="uid://dmj3k04r4ch06" path="res://scn/GameScene/UIserversConnect/hight_level_ui.tscn" id="1_1vour"]
 [ext_resource type="Script" uid="uid://csrswr52746k0" path="res://scn/GameScene/hight_level_multiplayer_spawner.gd" id="2_px42d"]
-[ext_resource type="PackedScene" uid="uid://t62lgs37ki8c" path="res://scn/GameScene/UI_lose_window/UI_lose_window.tscn" id="2_ywuwv"]
 [ext_resource type="PackedScene" uid="uid://c6fe1ciip2exe" path="res://scn/Entity/Player/player.tscn" id="3_ywuwv"]
 [ext_resource type="PackedScene" uid="uid://dxsccjfemldiv" path="res://scn/Wall/wall.tscn" id="4_4mj14"]
 [ext_resource type="Texture2D" uid="uid://cew4a2qgjnpew" path="res://assets/Walls/ship.png" id="5_w6t4w"]
@@ -36,9 +35,6 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-
-[node name="UiLoseWindow" parent="CanvasLayer" groups=["lose_window"] instance=ExtResource("2_ywuwv")]
-visible = false
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." groups=["spawner"]]
 _spawnable_scenes = PackedStringArray("uid://c6fe1ciip2exe")

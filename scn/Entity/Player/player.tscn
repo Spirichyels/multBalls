@@ -86,7 +86,7 @@ _data = {
 &"1": SubResource("Animation_r8ipl")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["players"]]
 position = Vector2(646, 343)
 scale = Vector2(2.1200001, 2.1200001)
 collision_mask = 3

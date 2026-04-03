@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://t62lgs37ki8c"]
+
+[ext_resource type="Script" uid="uid://ce0emwcda2gt1" path="res://scn/GameScene/UI_lose_window/ui_lose_window.gd" id="1_0psll"]
+
+[node name="UiLoseWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0psll")
+
+[node name="text_los_or_win" type="Label" parent="."]
+layout_mode = 0
+offset_left = 509.0
+offset_top = 227.0
+offset_right = 812.0
+offset_bottom = 305.0
+text = "проиграл"
+
+[node name="Button_again" type="Button" parent="."]
+layout_mode = 0
+offset_left = 531.0
+offset_top = 324.0
+offset_right = 784.0
+offset_bottom = 367.0
+text = "Заного"
+
+[connection signal="pressed" from="Button_again" to="." method="_on_button_again_pressed"]
