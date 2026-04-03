@@ -20,11 +20,3 @@ func start_client():
 	multiplayer.multiplayer_peer = peer
 	print("клиент: peer создан", peer)
 	
-	await get_tree().process_frame  # ждем кадр
-	
-	var spawner = get_tree().get_first_node_in_group("spawner")
-	print("spawner найден:", spawner)
-	if spawner:
-		spawner.request_players.rpc_id(1)
-	else:
-		print("спавнер не найден!")

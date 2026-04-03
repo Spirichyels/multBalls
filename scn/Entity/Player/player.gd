@@ -8,11 +8,6 @@ const PUSH_FORCE = 2000.0
 const FRICTION = 0.99  # Трение (0.9 = 10% замедления за кадр)
 
 
-const SKINS = {
-	0: preload("res://res/skins/skin_0.tres"),
-	1: preload("res://res/skins/skin_1.tres"),
-	#2: preload("res://res/skins/skin_2.tres"),
-}
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -22,11 +17,7 @@ const SKINS = {
 
 @export var spawn_count = 1
 
-@export var skin_id = -1:
-	set(value):
-		skin_id = value
-		print("я изменился: ", skin_id)
-
+@export var skin_id = -2
 
 
 func _ready() -> void:
@@ -37,7 +28,6 @@ func _ready() -> void:
 	
 	position.x = randi() % 1000 + 100
 	position.y = randi() % 520 + 100
-	print(multiplayer.get_unique_id(), ": ",player_name_label.text, " : ", skin_id)
 	
 
 
@@ -80,9 +70,5 @@ func apply_push_force(force: Vector2):
 	
 @rpc("any_peer")
 func set_skin(id):
-	print("set_skin ВЫЗВАН на ID:", multiplayer.get_unique_id(), " для игрока с именем:", name)
-	var path = "res://res/skins/skin_" + str(id) + ".tres"
-	animated_sprite_2d.sprite_frames = load(path)
-	animated_sprite_2d.play("ball")
-	animated_sprite_2d.visible = true
-	print("видимость:", animated_sprite_2d.visible)
+	$AnimationPlayer.play(str(id))
+	

@@ -1,0 +1,73 @@
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://dsh1yme4tlqin"]
+
+[ext_resource type="Texture2D" uid="uid://bddyuuqm1dik5" path="res://assets/Balls/balls-Sheet.png" id="1_qp6d7"]
+[ext_resource type="Texture2D" uid="uid://cr7snfn4hs8b5" path="res://assets/Balls/foot_ball-Sheet.png" id="2_2t07l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv6e1"]
+atlas = ExtResource("1_qp6d7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mh6cg"]
+atlas = ExtResource("1_qp6d7")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uelhj"]
+atlas = ExtResource("1_qp6d7")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8nad"]
+atlas = ExtResource("1_qp6d7")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6w7q8"]
+atlas = ExtResource("2_2t07l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uwbi"]
+atlas = ExtResource("2_2t07l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oay6h"]
+atlas = ExtResource("2_2t07l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ic41l"]
+atlas = ExtResource("2_2t07l")
+region = Rect2(96, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv6e1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mh6cg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uelhj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8nad")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6w7q8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5uwbi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oay6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ic41l")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}]
