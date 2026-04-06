@@ -4,16 +4,29 @@ extends MultiplayerSpawner
 var players = {}
 
 func _ready():
+	
 	add_to_group("spawner")
 	if multiplayer.is_server():
-		multiplayer.peer_connected.connect(spawn_player)
+		if not HightLevelNetworkHandler.game_started: #!!!!!!!на клиенте проверяет, исправить
+			multiplayer.peer_connected.connect(spawn_player)
+		else:
+			join_refused()
 
 func spawn_player(id):
+	await HightLevelNetworkHandler.game_started_changed
 	if !multiplayer.is_server(): return
 	var player = network_player.instantiate()
 	player.name = str(id)
-	
 	get_node(spawn_path).add_child(player)
-	player.set_skin.rpc(1)
+	player.skin_id = HightLevelNetworkHandler.or1()
+	print(player.skin_id)
+	player.set_skin.rpc(player.skin_id)
+	
 	players[id] = player
 	
+	
+@rpc("call_local")
+func join_refused():
+	print("Игра уже началась, подключение отклонено")
+	multiplayer.multiplayer_peer = null
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

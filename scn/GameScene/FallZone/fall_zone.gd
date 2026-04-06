@@ -1,78 +1,137 @@
 extends Node2D
 
-var players_in_game = []
 var maxPlayers 
 var deadPlayers = 0
+var round_ended = false
 
+var processing = []
 
+var ui_lose_window
+
+func _ready() -> void:
+	ui_lose_window = get_tree().get_first_node_in_group("lose_window")
+	await get_tree().process_frame  # ждём кадр
+	maxPlayers = get_tree().get_nodes_in_group("players")
+
+func _restart_game():
+	
+	
+	if not multiplayer.is_server(): return
+	print("_restart_game это " + (" сервер" if multiplayer.is_server() else " клиент"))
+
+	round_ended = false
+	# Сбрасываем счётчики на сервере
+	maxPlayers = get_tree().get_nodes_in_group("players")
+	deadPlayers = 0
+	
+	#print("round_ended: ", round_ended, "maxPlayers.size(): ",maxPlayers.size(), " deadPlayers: ", deadPlayers)
+	
+	restart_clients.rpc()
+	
+	
+	
+@rpc("call_local")
+func restart_clients():
+	print("restart_clients это " + (" сервер" if multiplayer.is_server() else " клиент"))
+	#if multiplayer.is_server(): 
+		#return
+	# Сбрасываем всё на клиентах
+	
+	
+	deadPlayers = 0
+	maxPlayers = get_tree().get_nodes_in_group("players")
+	#
+	print("round_ended: ", round_ended, "maxPlayers.size(): ",maxPlayers.size(), " deadPlayers: ", deadPlayers)
+	for player in maxPlayers:
+		player.reborn.rpc()
+	#
+	# Скрываем UI
+	await get_tree().create_timer(1.0).timeout
+	ui_lose_window.visible = false
+
+@rpc("call_local")
+func kill_player(_name: String):
+	
+	for player in maxPlayers:
+		if player.name == _name:
+			player.orDead = true
+			#print("player_name: ", name, " player.name: ", player.name, "body.orDead: ", player.orDead)	
+			break
+
+	
 func _lose(body):
-	#body.visible = false
-	#print(body.name, " lose")
 	maxPlayers = get_tree().get_nodes_in_group("players")
 	
-	if body.is_multiplayer_authority():
-		report_fall.rpc_id(1, body.name)  # отправляем серверу
+	#проверка только на сервере	
+	if not multiplayer.is_server(): return
+	if round_ended: return
+	if body.orDead: return
+	if body.has_meta("processing"): return  # проверка метки
+	
+	body.set_meta("processing", true)  # ставим метку
+	print("_lose это " + (" сервер" if multiplayer.is_server() else " клиент"))
+	
+	#убиваем лузера
+	body.orDead = true
+	
+	
+	# Рассылаем клиентам, чтобы они тоже убили этого игрока
+	kill_player.rpc(body.name)
+	#print("player_name: ", body.name, "orDead: ", body.orDead)
+	
+	
+	if multiplayer.is_server():
+		#print("maxPlayers ", maxPlayers.size() , (" сервер" if multiplayer.is_server() else " клиент"))
+		pass
+	
 	deadPlayers +=1
-	print("deadPlayers: ", deadPlayers)
+	if multiplayer.is_server():
+		#print("deadPlayers: ", deadPlayers)
+		pass
 
-			
+	# Проверяем на сервере
 	if deadPlayers + 1 == maxPlayers.size():
-		for i in maxPlayers.size():
-			if maxPlayers[i].visible == true:
-				report_win.rpc_id(1, str(maxPlayers[i].player_name_label.text))
-				maxPlayers[i].queue_free()
-
-@rpc("any_peer")
-func report_fall(player_name: String):
-	if not multiplayer.is_server(): return
-	# Сервер обрабатывает
-	handle_player_fall.rpc(player_name)
+		round_ended = true
+		for player in maxPlayers:
+			if not player.orDead:
+				show_game_over_clients.rpc(str(player.player_name_label.text))
+				player.orDead = true
+				kill_player.rpc(player.name)
+				next_round()
+				break
 	
-@rpc("any_peer")
-func report_win(player_name):
+	
+	await get_tree().create_timer(0.9).timeout
+	body.remove_meta("processing")  # убираем метку
+	
+
+func next_round():
 	if not multiplayer.is_server(): return
-	# Сервер обрабатывает
-	show_game_over.rpc(player_name)
+	if not round_ended: return
+	print("next_round это " + (" сервер" if multiplayer.is_server() else " клиент"))
+	
+	await get_tree().create_timer(1.0).timeout
+	processing.clear()
+	print("игра закончилась, запускаю рестарт сервера")
+	_restart_game()
+	
+	
+	
+
 
 @rpc("call_local")
-func handle_player_fall(player_name: String):
-	var player = get_node("../" + player_name)
-	if player:
-		player.queue_free()
-		print(player.name, " lose")
-		
-		
-@rpc("call_local")
-func show_game_over(winner):
-	#var ui = get_node("/root/Main/CanvasLayer/UiLoseWindow")
-	#ui.visible = true
-	#ui.get_node("WinnerLabel").text = winner + " победил!"
-	
-	var ui_lose_window = get_tree().get_first_node_in_group("lose_window")
-	ui_lose_window.update_loser_text( str(winner, " победил"))
+func show_game_over_clients(winner):
+	if multiplayer.is_server(): return
+	print("show_game_over_clients это " + ("сервер" if multiplayer.is_server() else "клиент"))
+	ui_lose_window.update_loser_text(str(winner, " победил"))
 	ui_lose_window.visible = true
-		
+
 	
 
 
 
-func _on_area_2d_4_body_entered(body: Node2D) -> void:
-	
-	_lose(body)
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if not body.orDead and round_ended == false:
+		#print("_on_area_2d_body_entered это " + ("сервер" if multiplayer.is_server() else "клиент"))
+		_lose(body)
 	pass # Replace with function body.
-
-
-func _on_area_2d_3_body_entered(body: Node2D) -> void:
-	_lose(body)
-	pass # Replace with function body.
-
-
-func _on_area_2d_2_body_entered(body: Node2D) -> void:
-	_lose(body)
-	pass # Replace with function body.
-
-
-func _on_area_2d_1_body_entered(body: Node2D) -> void:
-	_lose(body)
-	pass # Replace with function body.
-	

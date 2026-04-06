@@ -95,7 +95,7 @@ light_mask = 2
 position = Vector2(12.5, 359.5)
 shape = SubResource("RectangleShape2D_toum1")
 
-[connection signal="body_entered" from="fallZone/Area2D4" to="fallZone" method="_on_area_2d_4_body_entered"]
-[connection signal="body_entered" from="fallZone/Area2D3" to="fallZone" method="_on_area_2d_3_body_entered"]
-[connection signal="body_entered" from="fallZone/Area2D2" to="fallZone" method="_on_area_2d_2_body_entered"]
-[connection signal="body_entered" from="fallZone/Area2D1" to="fallZone" method="_on_area_2d_1_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D4" to="fallZone" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D3" to="fallZone" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D2" to="fallZone" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="fallZone/Area2D1" to="fallZone" method="_on_area_2d_body_entered"]
