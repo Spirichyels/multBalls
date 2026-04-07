@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8c40fshpdlrd"]
+
+[ext_resource type="Script" uid="uid://cgd2jgyoo27hm" path="res://ui_table.gd" id="1_qpyj5"]
+[ext_resource type="PackedScene" uid="uid://c1jsjugu2v1el" path="res://scn/GameScene/UI_table/HBCstring/hb_cstring.tscn" id="2_56a1c"]
+
+[node name="UI_table" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 860.0
+offset_bottom = -525.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qpyj5")
+
+[node name="VBCstolbec" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -90.0
+offset_right = 417.0
+offset_bottom = 40.0
+
+[node name="HBCstring" parent="VBCstolbec" instance=ExtResource("2_56a1c")]
+layout_mode = 2

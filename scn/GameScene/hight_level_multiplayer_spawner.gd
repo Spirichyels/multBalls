@@ -22,6 +22,10 @@ func spawn_player(id):
 	print(player.skin_id)
 	player.set_skin.rpc(player.skin_id)
 	
+	HightLevelNetworkHandler.add_player(player.name)
+	print("spawn_player это " + (" сервер" if multiplayer.is_server() else " клиент"))
+	
+	print(HightLevelNetworkHandler.players)
 	players[id] = player
 	
 	

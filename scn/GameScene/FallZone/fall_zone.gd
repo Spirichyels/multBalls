@@ -95,6 +95,8 @@ func _lose(body):
 		for player in maxPlayers:
 			if not player.orDead:
 				show_game_over_clients.rpc(str(player.player_name_label.text))
+				HightLevelNetworkHandler.up_score_player(player.name, 1)
+				print(HightLevelNetworkHandler.players)
 				player.orDead = true
 				kill_player.rpc(player.name)
 				next_round()

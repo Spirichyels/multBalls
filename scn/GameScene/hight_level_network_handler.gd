@@ -7,6 +7,10 @@ var player_skin = 0
 var IP_ADERSS: String = ""
 const PORT: int = 42069
 
+var players = {}
+
+
+
 var peer: ENetMultiplayerPeer
 
 signal game_started_changed
@@ -15,6 +19,12 @@ var game_started = false:
 	set(value):
 		game_started = value
 		game_started_changed.emit()
+
+func add_player(_name: String):
+	players[_name] = {"score": 0}
+	
+func up_score_player(_name: String, new_score: int):
+	players[_name].score += new_score
 
 func or1():
 	#return 5
