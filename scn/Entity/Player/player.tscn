@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6fe1ciip2exe"]
+[gd_scene load_steps=13 format=3 uid="uid://c6fe1ciip2exe"]
 
 [ext_resource type="Texture2D" uid="uid://dsrmvag47b5li" path="res://icon.svg" id="1_386vx"]
 [ext_resource type="Script" uid="uid://biiyqo03om8cl" path="res://scn/Entity/Player/player.gd" id="1_dltx8"]
@@ -89,10 +89,126 @@ tracks/1/keys = {
 "values": ["1"]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7qnq2"]
+[sub_resource type="Animation" id="Animation_7qnq2"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["2"]
+}
+
+[sub_resource type="Animation" id="Animation_0q447"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["3"]
+}
+
+[sub_resource type="Animation" id="Animation_iowue"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["4"]
+}
+
+[sub_resource type="Animation" id="Animation_vhfnw"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["5"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bchdj"]
 _data = {
 &"0": SubResource("Animation_gvj62"),
-&"1": SubResource("Animation_r8ipl")
+&"1": SubResource("Animation_r8ipl"),
+&"2": SubResource("Animation_7qnq2"),
+&"3": SubResource("Animation_0q447"),
+&"4": SubResource("Animation_iowue"),
+&"5": SubResource("Animation_vhfnw")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["players"]]
@@ -126,10 +242,10 @@ horizontal_alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("3_gvj62")
-animation = &"0"
-frame_progress = 0.12734771
+animation = &"5"
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_7qnq2")
+&"": SubResource("AnimationLibrary_bchdj")
 }

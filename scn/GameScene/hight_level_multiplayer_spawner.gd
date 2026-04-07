@@ -13,7 +13,7 @@ func _ready():
 			join_refused()
 
 func spawn_player(id):
-	await HightLevelNetworkHandler.game_started_changed
+	#await HightLevelNetworkHandler.game_started_changed
 	if !multiplayer.is_server(): return
 	var player = network_player.instantiate()
 	player.name = str(id)

@@ -106,5 +106,6 @@ func reborn():
 	
 @rpc("any_peer")
 func set_skin(id):
+	#print(str(id))
 	$AnimationPlayer.play(str(id))
 	

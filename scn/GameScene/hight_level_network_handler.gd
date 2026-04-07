@@ -17,12 +17,15 @@ var game_started = false:
 		game_started_changed.emit()
 
 func or1():
-	if player_skin == 0:
-		player_skin = 1
-		return 0
-	elif player_skin == 1:
-		player_skin = 0
-		return 1
+	#return 5
+	return(randi()%6)
+	
+	#if player_skin == 0:
+		#player_skin = 1
+		#return 0
+	#elif player_skin == 1:
+		#player_skin = 0
+		#return 1
 	
 
 func start_server():
