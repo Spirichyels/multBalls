@@ -14,8 +14,16 @@ const FRICTION = 0.99  # Трение (0.9 = 10% замедления за ка�
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 
+
+
 @onready var player_name_label: Label = %player_name_label
 
+@export var nickname = "bot_no_name":
+	set(value):
+		if value != "server":
+			nickname = value
+			player_name_label.text = nickname
+		
 @export var spawn_count = 1
 @export var skin_id = -2
 @export var is_ready = false
@@ -45,16 +53,19 @@ func _reborn():
 	orDead = false
 	
 
+	
 
 func _ready() -> void:
-	
-	player_name_label.text = HightLevelNetworkHandler.player_name
 	player_name_label.position.x = player_name_label.size.x / 4 * -1
-	
+	#if not is_multiplayer_authority():
+		#return  # только хозяин устанавливает имя
+	nickname = HightLevelNetworkHandler.player_name
+	#await get_tree().create_timer(0.5).timeout  # ждём синхронизации
+	#print("nickname: ", nickname + (" сервер" if multiplayer.is_server() else " клиент"))
+
 	
 	_reborn()
-	#position.x = randi() % 1000 + 100
-	#position.y = randi() % 520 + 100
+
 	
 
 
@@ -100,12 +111,15 @@ func _physics_process(_delta: float) -> void:
 func apply_push_force(force: Vector2):
 	velocity += force
 
-@rpc("any_peer")
+@rpc("any_peer", )
 func reborn():
 	_reborn()
-	
+
+
+		
+
 @rpc("any_peer")
-func set_skin(id):
+func set_skin(_id):
 	#print(str(id))
-	$AnimationPlayer.play(str(id))
+	$AnimationPlayer.play(str(_id))
 	

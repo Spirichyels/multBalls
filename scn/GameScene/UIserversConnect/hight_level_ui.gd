@@ -45,7 +45,3 @@ func _on_ipadres_input_text_submitted(new_text: String) -> void:
 func _on_ipadres_input_text_changed(new_text: String) -> void:
 	HightLevelNetworkHandler.IP_ADERSS = new_text
 	pass # Replace with function body.
-
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.

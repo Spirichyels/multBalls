@@ -12,6 +12,8 @@ func _ready() -> void:
 	ui_lose_window = get_tree().get_first_node_in_group("lose_window")
 	await get_tree().process_frame  # ждём кадр
 	maxPlayers = get_tree().get_nodes_in_group("players")
+	
+	
 
 func _restart_game():
 	
@@ -50,12 +52,12 @@ func restart_clients():
 	ui_lose_window.visible = false
 
 @rpc("call_local")
-func kill_player(_name: String):
+func kill_player(_id: String):
 	
 	for player in maxPlayers:
-		if player.name == _name:
+		if player.name == _id:
 			player.orDead = true
-			#print("player_name: ", name, " player.name: ", player.name, "body.orDead: ", player.orDead)	
+			#print("player_name: ", name, " player.id: ", player.id, "body.orDead: ", player.orDead)	
 			break
 
 	
@@ -95,7 +97,8 @@ func _lose(body):
 		for player in maxPlayers:
 			if not player.orDead:
 				show_game_over_clients.rpc(str(player.player_name_label.text))
-				HightLevelNetworkHandler.up_score_player(player.name, 1)
+				HightLevelNetworkHandler.up_score_player(str(player.name),player.nickname, 1)
+				#HightLevelNetworkHandler.up_score_player(player.id, player.player_name_label.text, 1)
 				print(HightLevelNetworkHandler.players)
 				player.orDead = true
 				kill_player.rpc(player.name)

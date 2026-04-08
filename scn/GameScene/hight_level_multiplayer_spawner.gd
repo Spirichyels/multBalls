@@ -11,24 +11,56 @@ func _ready():
 			multiplayer.peer_connected.connect(spawn_player)
 		else:
 			join_refused()
+	await HightLevelNetworkHandler.game_started_changed
+	#HightLevelNetworkHandler.add_player(player.name, player.nickname)
+	for key_player in players:
+		#HightLevelNetworkHandler.add_player(players[key_player].name, players[key_player].nickname)
+		print("player.nickname: ",players[key_player].nickname , (" сервер" if multiplayer.is_server() else " клиент"))
+	broadcast_players_list()
+
+func broadcast_players_list():
+	# 1. Создаём пустой массив, куда сложим данные всех игроков
+	var players_data = []
+	
+	# 2. Проходим по словарю players (ключ = id, значение = объект игрока)
+	for id in players:
+		# 3. Добавляем в массив словарь с данными одного игрока
+		players_data.append({
+			"id": id,                           # ID игрока
+			"name": players[id].nickname,       # имя из переменной nickname
+			"score": 0                          # очки (пока 0)
+		})
+	
+	# 4. Отправляем массив на все клиенты, вызывая функцию create_table_rows
+	create_table_rows.rpc(players_data)
+@rpc("call_local")
+func create_table_rows(data: Array):
+	for player_data in data:
+		HightLevelNetworkHandler.add_player(str(player_data.id), str(player_data.name))
+
 
 func spawn_player(id):
-	#await HightLevelNetworkHandler.game_started_changed
+	#await HightLevelNetworkHandler.game_started_changed расскоментировать на релизе
 	if !multiplayer.is_server(): return
 	var player = network_player.instantiate()
 	player.name = str(id)
+	
+	
+	
 	get_node(spawn_path).add_child(player)
 	player.skin_id = HightLevelNetworkHandler.or1()
+	
 	print(player.skin_id)
 	player.set_skin.rpc(player.skin_id)
+	#print("player.nickname: ", player.nickname + (" сервер" if multiplayer.is_server() else " клиент"))
 	
-	HightLevelNetworkHandler.add_player(player.name)
-	print("spawn_player это " + (" сервер" if multiplayer.is_server() else " клиент"))
 	
-	print(HightLevelNetworkHandler.players)
 	players[id] = player
+
 	
-	
+
+
+#пока не работает
 @rpc("call_local")
 func join_refused():
 	print("Игра уже началась, подключение отклонено")
