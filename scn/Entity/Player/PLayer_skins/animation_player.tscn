@@ -1,40 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6fe1ciip2exe"]
-
-[ext_resource type="Texture2D" uid="uid://dsrmvag47b5li" path="res://icon.svg" id="1_386vx"]
-[ext_resource type="Script" uid="uid://biiyqo03om8cl" path="res://scn/Entity/Player/player.gd" id="1_dltx8"]
-[ext_resource type="PackedScene" uid="uid://bo4y817ev6wrs" path="res://scn/Entity/Player/PLayer_skins/animated_sprite_2d.tscn" id="3_r8ipl"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_dltx8"]
-radius = 16.51617
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_diy2p"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("player_name_label:text")
-properties/1/spawn = true
-properties/1/replication_mode = 0
-properties/2/path = NodePath(".:spawn_count")
-properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath("AnimationPlayer:current_animation")
-properties/3/spawn = true
-properties/3/replication_mode = 2
-properties/4/path = NodePath(".:orDead")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath(".:collision_layer")
-properties/5/spawn = true
-properties/5/replication_mode = 2
-properties/6/path = NodePath(".:collision_mask")
-properties/6/spawn = true
-properties/6/replication_mode = 2
-properties/7/path = NodePath(".:nickname")
-properties/7/spawn = true
-properties/7/replication_mode = 2
-properties/8/path = NodePath(".:skin_id")
-properties/8/spawn = true
-properties/8/replication_mode = 2
+[gd_scene load_steps=8 format=3 uid="uid://7iyqw2bkj1d8"]
 
 [sub_resource type="Animation" id="Animation_gvj62"]
 length = 0.8
@@ -214,38 +178,7 @@ _data = {
 &"5": SubResource("Animation_vhfnw")
 }
 
-[node name="Player" type="CharacterBody2D" groups=["players"]]
-position = Vector2(646, 343)
-scale = Vector2(2.1200001, 2.1200001)
-collision_mask = 3
-motion_mode = 1
-script = ExtResource("1_dltx8")
-
-[node name="icon" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(0.265625, 0.265625)
-texture = ExtResource("1_386vx")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_dltx8")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_diy2p")
-
-[node name="player_name_label" type="Label" parent="."]
-unique_name_in_owner = true
-offset_left = -36.792454
-offset_top = -33.490562
-offset_right = 363.20755
-offset_bottom = -5.4905624
-scale = Vector2(0.5, 0.5)
-theme_override_font_sizes/font_size = 20
-text = "botfghfghfghfghfghfghfghfgfdgdfgdfgdf"
-horizontal_alignment = 1
-
-[node name="AnimatedSprite2D" parent="." instance=ExtResource("3_r8ipl")]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer"]
 libraries = {
 &"": SubResource("AnimationLibrary_bchdj")
 }

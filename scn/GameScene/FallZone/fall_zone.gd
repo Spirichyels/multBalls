@@ -136,7 +136,8 @@ func show_game_over_clients(winner):
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if not body.orDead and round_ended == false:
-		#print("_on_area_2d_body_entered это " + ("сервер" if multiplayer.is_server() else "клиент"))
-		_lose(body)
-	pass # Replace with function body.
+	if body.is_in_group("players"):
+		if not body.orDead and round_ended == false:
+			#print("_on_area_2d_body_entered это " + ("сервер" if multiplayer.is_server() else "клиент"))
+			_lose(body)
+		pass # Replace with function body.

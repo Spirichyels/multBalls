@@ -1,42 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6fe1ciip2exe"]
+[gd_scene load_steps=11 format=3 uid="uid://cim0m11hl1oth"]
 
-[ext_resource type="Texture2D" uid="uid://dsrmvag47b5li" path="res://icon.svg" id="1_386vx"]
-[ext_resource type="Script" uid="uid://biiyqo03om8cl" path="res://scn/Entity/Player/player.gd" id="1_dltx8"]
-[ext_resource type="PackedScene" uid="uid://bo4y817ev6wrs" path="res://scn/Entity/Player/PLayer_skins/animated_sprite_2d.tscn" id="3_r8ipl"]
+[ext_resource type="Script" uid="uid://dvrr3iavtw48t" path="res://scn/GameScene/UI_Skins_Menu/skin.gd" id="1_jypdx"]
+[ext_resource type="PackedScene" uid="uid://bo4y817ev6wrs" path="res://scn/Entity/Player/PLayer_skins/animated_sprite_2d.tscn" id="1_pnjl8"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dltx8"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_6lpvg"]
 radius = 16.51617
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_diy2p"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("player_name_label:text")
-properties/1/spawn = true
-properties/1/replication_mode = 0
-properties/2/path = NodePath(".:spawn_count")
-properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath("AnimationPlayer:current_animation")
-properties/3/spawn = true
-properties/3/replication_mode = 2
-properties/4/path = NodePath(".:orDead")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath(".:collision_layer")
-properties/5/spawn = true
-properties/5/replication_mode = 2
-properties/6/path = NodePath(".:collision_mask")
-properties/6/spawn = true
-properties/6/replication_mode = 2
-properties/7/path = NodePath(".:nickname")
-properties/7/spawn = true
-properties/7/replication_mode = 2
-properties/8/path = NodePath(".:skin_id")
-properties/8/spawn = true
-properties/8/replication_mode = 2
-
-[sub_resource type="Animation" id="Animation_gvj62"]
+[sub_resource type="Animation" id="Animation_pnjl8"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -64,7 +34,7 @@ tracks/1/keys = {
 "values": ["0"]
 }
 
-[sub_resource type="Animation" id="Animation_r8ipl"]
+[sub_resource type="Animation" id="Animation_jypdx"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -92,7 +62,7 @@ tracks/1/keys = {
 "values": ["1"]
 }
 
-[sub_resource type="Animation" id="Animation_7qnq2"]
+[sub_resource type="Animation" id="Animation_wxtob"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -120,7 +90,7 @@ tracks/1/keys = {
 "values": ["2"]
 }
 
-[sub_resource type="Animation" id="Animation_0q447"]
+[sub_resource type="Animation" id="Animation_0x6or"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -148,7 +118,7 @@ tracks/1/keys = {
 "values": ["3"]
 }
 
-[sub_resource type="Animation" id="Animation_iowue"]
+[sub_resource type="Animation" id="Animation_3qvwa"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -176,7 +146,7 @@ tracks/1/keys = {
 "values": ["4"]
 }
 
-[sub_resource type="Animation" id="Animation_vhfnw"]
+[sub_resource type="Animation" id="Animation_xpctm"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
@@ -204,48 +174,30 @@ tracks/1/keys = {
 "values": ["5"]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bchdj"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tu0y6"]
 _data = {
-&"0": SubResource("Animation_gvj62"),
-&"1": SubResource("Animation_r8ipl"),
-&"2": SubResource("Animation_7qnq2"),
-&"3": SubResource("Animation_0q447"),
-&"4": SubResource("Animation_iowue"),
-&"5": SubResource("Animation_vhfnw")
+&"0": SubResource("Animation_pnjl8"),
+&"1": SubResource("Animation_jypdx"),
+&"2": SubResource("Animation_wxtob"),
+&"3": SubResource("Animation_0x6or"),
+&"4": SubResource("Animation_3qvwa"),
+&"5": SubResource("Animation_xpctm")
 }
 
-[node name="Player" type="CharacterBody2D" groups=["players"]]
-position = Vector2(646, 343)
-scale = Vector2(2.1200001, 2.1200001)
-collision_mask = 3
-motion_mode = 1
-script = ExtResource("1_dltx8")
-
-[node name="icon" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(0.265625, 0.265625)
-texture = ExtResource("1_386vx")
+[node name="Skin" type="CharacterBody2D" groups=["skin_in_menu_skins"]]
+light_mask = 16
+visibility_layer = 8
+scale = Vector2(3, 3)
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("1_jypdx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_dltx8")
+shape = SubResource("CircleShape2D_6lpvg")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_diy2p")
-
-[node name="player_name_label" type="Label" parent="."]
-unique_name_in_owner = true
-offset_left = -36.792454
-offset_top = -33.490562
-offset_right = 363.20755
-offset_bottom = -5.4905624
-scale = Vector2(0.5, 0.5)
-theme_override_font_sizes/font_size = 20
-text = "botfghfghfghfghfghfghfghfgfdgdfgdfgdf"
-horizontal_alignment = 1
-
-[node name="AnimatedSprite2D" parent="." instance=ExtResource("3_r8ipl")]
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("1_pnjl8")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_bchdj")
+&"": SubResource("AnimationLibrary_tu0y6")
 }

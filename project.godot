@@ -26,6 +26,7 @@ window/size/viewport_height=710
 window/size/resizable=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
+window/canvas_textures/default_texture_filter=1
 
 [editor_plugins]
 
@@ -35,6 +36,8 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
 
 players=""
 ui_table=""
+skin_in_menu_skins=""
+UI_global=""
 
 [input]
 
@@ -78,5 +81,6 @@ ui_down={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=3
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

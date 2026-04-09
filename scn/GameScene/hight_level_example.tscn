@@ -1,13 +1,17 @@
-[gd_scene load_steps=13 format=4 uid="uid://d1s27dsja87si"]
+[gd_scene load_steps=17 format=4 uid="uid://d1s27dsja87si"]
 
 [ext_resource type="PackedScene" uid="uid://dmj3k04r4ch06" path="res://scn/GameScene/UIserversConnect/hight_level_ui.tscn" id="1_1vour"]
+[ext_resource type="PackedScene" uid="uid://ca6p7qf4xrgrx" path="res://scn/GameScene/UI_Skins_Menu/ui_skins_menu.tscn" id="1_4mj14"]
+[ext_resource type="Script" uid="uid://bbc4fxwteddvj" path="res://scn/GameScene/ui_global.gd" id="1_kwy2f"]
 [ext_resource type="Script" uid="uid://csrswr52746k0" path="res://scn/GameScene/hight_level_multiplayer_spawner.gd" id="2_px42d"]
 [ext_resource type="PackedScene" uid="uid://t62lgs37ki8c" path="res://scn/GameScene/UI_lose_window/UI_lose_window.tscn" id="2_ywuwv"]
 [ext_resource type="PackedScene" uid="uid://c8c40fshpdlrd" path="res://scn/GameScene/UI_table/ui_table.tscn" id="3_4mj14"]
 [ext_resource type="PackedScene" uid="uid://c6fe1ciip2exe" path="res://scn/Entity/Player/player.tscn" id="3_ywuwv"]
 [ext_resource type="PackedScene" uid="uid://dxsccjfemldiv" path="res://scn/Wall/wall.tscn" id="4_4mj14"]
 [ext_resource type="Texture2D" uid="uid://cew4a2qgjnpew" path="res://assets/Walls/ship.png" id="5_w6t4w"]
+[ext_resource type="Texture2D" uid="uid://crs3m32nnngm4" path="res://assets/ok/ok1.png" id="6_kwy2f"]
 [ext_resource type="Script" uid="uid://s12ekygrudbd" path="res://scn/GameScene/FallZone/fall_zone.gd" id="6_lm5om"]
+[ext_resource type="Texture2D" uid="uid://mf4xgujbxpgl" path="res://assets/ok/ok2.png" id="7_kwy2f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlsof"]
 texture = ExtResource("5_w6t4w")
@@ -29,23 +33,36 @@ size = Vector2(27, 721)
 
 [node name="HightLevelExample" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI_global" type="CanvasLayer" parent="." groups=["UI_global"]]
+script = ExtResource("1_kwy2f")
 
-[node name="HightLevelUI" parent="CanvasLayer" instance=ExtResource("1_1vour")]
+[node name="UI_Skins_menu" parent="UI_global" instance=ExtResource("1_4mj14")]
+metadata/_edit_use_anchors_ = true
+
+[node name="HightLevelUI" parent="UI_global" instance=ExtResource("1_1vour")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 
-[node name="UiLoseWindow" parent="CanvasLayer" groups=["lose_window"] instance=ExtResource("2_ywuwv")]
+[node name="UiLoseWindow" parent="UI_global" groups=["lose_window"] instance=ExtResource("2_ywuwv")]
 visible = false
 
-[node name="UI_table" parent="CanvasLayer" groups=["ui_table"] instance=ExtResource("3_4mj14")]
+[node name="UI_table" parent="UI_global" groups=["ui_table"] instance=ExtResource("3_4mj14")]
 offset_left = 832.0
 offset_top = 29.0
 offset_right = -28.0
 offset_bottom = -496.0
+
+[node name="SkinsButton" type="TextureButton" parent="UI_global"]
+offset_left = 1025.0
+offset_top = 481.0
+offset_right = 1211.0
+offset_bottom = 646.0
+texture_normal = ExtResource("6_kwy2f")
+texture_pressed = ExtResource("7_kwy2f")
+stretch_mode = 5
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." groups=["spawner"]]
 _spawnable_scenes = PackedStringArray("uid://c6fe1ciip2exe")
@@ -102,6 +119,7 @@ light_mask = 2
 position = Vector2(12.5, 359.5)
 shape = SubResource("RectangleShape2D_toum1")
 
+[connection signal="pressed" from="UI_global/SkinsButton" to="UI_global" method="_on_skins_button_pressed"]
 [connection signal="body_entered" from="fallZone/Area2D4" to="fallZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="fallZone/Area2D3" to="fallZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="fallZone/Area2D2" to="fallZone" method="_on_area_2d_body_entered"]

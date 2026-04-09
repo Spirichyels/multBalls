@@ -4,9 +4,12 @@ extends Control
 
 @onready var name_input: LineEdit = %nameInput
 
+@onready var UI_global
+
 
 
 func _ready() -> void:
+	UI_global = get_tree().get_first_node_in_group("UI_global")
 	#рандомное имя
 	name_input.text = str("bot",randi()%100+1) 
 	HightLevelNetworkHandler.player_name = name_input.text
@@ -17,12 +20,14 @@ func _ready() -> void:
 func _on_server_pressed() -> void:
 	HightLevelNetworkHandler.start_server()
 	visible = false
+	UI_global.go_game()
 	pass # Replace with function body.
 
 
 func _on_client_pressed() -> void:
 	HightLevelNetworkHandler.start_client()
 	visible = false
+	UI_global.go_game()
 	pass # Replace with function body.
 
 	

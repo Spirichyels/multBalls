@@ -50,7 +50,8 @@ func broadcast_score_update(player_id: String, new_score: int):
 
 func or1():
 	#return 5
-	return(randi()%6)
+	return player_skin
+	#return(randi()%6)
 	
 	#if player_skin == 0:
 		#player_skin = 1

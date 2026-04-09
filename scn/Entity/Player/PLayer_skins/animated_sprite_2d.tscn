@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bo4y817ev6wrs"]
+
+[ext_resource type="SpriteFrames" uid="uid://dsh1yme4tlqin" path="res://res/player.tres" id="1_fr553"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_fr553")
+animation = &"0"

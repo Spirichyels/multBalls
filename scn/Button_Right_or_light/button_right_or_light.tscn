@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bln4r7j5a7sko"]
+
+[ext_resource type="Texture2D" uid="uid://bhsl6i0omduap" path="res://assets/Strelka/strelkanormal.png" id="1_q8rtt"]
+[ext_resource type="Texture2D" uid="uid://bfy7i4adixqtt" path="res://assets/Strelka/strelkapressed.png" id="2_bdriu"]
+
+[node name="Button_right_or_light" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_q8rtt")
+texture_pressed = ExtResource("2_bdriu")

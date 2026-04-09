@@ -25,7 +25,13 @@ const FRICTION = 0.99  # Трение (0.9 = 10% замедления за ка�
 			player_name_label.text = nickname
 		
 @export var spawn_count = 1
-@export var skin_id = -2
+@export var skin_id = -2:
+	set(value):
+		skin_id = value
+		set_skin(skin_id)
+		print("skin_id: ", skin_id , (" сервер" if multiplayer.is_server() else " клиент"))
+		
+		
 @export var is_ready = false
 @export var orDead = false:
 	set(value):
@@ -60,6 +66,8 @@ func _ready() -> void:
 	#if not is_multiplayer_authority():
 		#return  # только хозяин устанавливает имя
 	nickname = HightLevelNetworkHandler.player_name
+	skin_id = HightLevelNetworkHandler.player_skin
+	print("HightLevelNetworkHandler.player_skin: ", HightLevelNetworkHandler.player_skin, (" сервер" if multiplayer.is_server() else " клиент"))
 	#await get_tree().create_timer(0.5).timeout  # ждём синхронизации
 	#print("nickname: ", nickname + (" сервер" if multiplayer.is_server() else " клиент"))
 

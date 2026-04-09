@@ -16,6 +16,8 @@ func _ready():
 	for key_player in players:
 		#HightLevelNetworkHandler.add_player(players[key_player].name, players[key_player].nickname)
 		print("player.nickname: ",players[key_player].nickname , (" сервер" if multiplayer.is_server() else " клиент"))
+		print("player.skin_id: ",players[key_player].skin_id , (" сервер" if multiplayer.is_server() else " клиент"))
+		
 	broadcast_players_list()
 
 func broadcast_players_list():
@@ -48,10 +50,10 @@ func spawn_player(id):
 	
 	
 	get_node(spawn_path).add_child(player)
-	player.skin_id = HightLevelNetworkHandler.or1()
+	#player.skin_id = HightLevelNetworkHandler.or1()
 	
-	print(player.skin_id)
-	player.set_skin.rpc(player.skin_id)
+	#print(player.skin_id)
+	#player.set_skin.rpc(player.skin_id)
 	#print("player.nickname: ", player.nickname + (" сервер" if multiplayer.is_server() else " клиент"))
 	
 	
