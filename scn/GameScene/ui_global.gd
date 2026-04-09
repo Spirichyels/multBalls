@@ -40,6 +40,7 @@ var state_ui = UI.Menu:
 				ui_lose_window.visible = true
 			UI.Client:
 				visible_false()
+				ui_table.visible = true
 
 
 func visible_false():
