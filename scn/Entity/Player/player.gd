@@ -4,11 +4,11 @@ extends CharacterBody2D
 
 
 const SPEED = 1000.0
-const PUSH_FORCE = 20.0
+const PUSH_FORCE = 80.0
 const FRICTION = 0.99  # Трение (0.9 = 10% замедления за кадр)
 
 
-
+var input_dir = Vector2.ZERO
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -23,12 +23,13 @@ const FRICTION = 0.99  # Трение (0.9 = 10% замедления за ка�
 		if value != "server":
 			nickname = value
 			player_name_label.text = nickname
+			print("nickname: ",nickname , (" сервер" if multiplayer.is_server() else " клиент"))
 		
 @export var spawn_count = 1
 @export var skin_id = -2:
 	set(value):
 		skin_id = value
-		set_skin(skin_id)
+		$AnimationPlayer.play(str(skin_id))
 		print("skin_id: ", skin_id , (" сервер" if multiplayer.is_server() else " клиент"))
 		
 		
@@ -63,13 +64,11 @@ func _reborn():
 
 func _ready() -> void:
 	player_name_label.position.x = player_name_label.size.x / 4 * -1
-	#if not is_multiplayer_authority():
-		#return  # только хозяин устанавливает имя
-	nickname = HightLevelNetworkHandler.player_name
-	skin_id = HightLevelNetworkHandler.player_skin
-	print("HightLevelNetworkHandler.player_skin: ", HightLevelNetworkHandler.player_skin, (" сервер" if multiplayer.is_server() else " клиент"))
-	#await get_tree().create_timer(0.5).timeout  # ждём синхронизации
-	#print("nickname: ", nickname + (" сервер" if multiplayer.is_server() else " клиент"))
+	
+	if not multiplayer.is_server():
+		set_player_skin.rpc_id(1, HightLevelNetworkHandler.player_skin)
+	
+	
 
 	
 	_reborn()
@@ -78,45 +77,26 @@ func _ready() -> void:
 
 
 func _enter_tree() -> void:
-	set_multiplayer_authority(name.to_int())
-	
+	set_multiplayer_authority(1)  # сервер управляет всем
+		
 
 func _physics_process(_delta: float) -> void:
-	if not is_multiplayer_authority(): return
+	if not multiplayer.is_server(): return
 	
-	# 1. Получаем ввод
-	
-	var input = 0
 	if not orDead:
-		input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		velocity += input_dir * SPEED * _delta
 	
-	# 2. Добавляем ускорение от ввода
-	if not orDead:
-		velocity += input * SPEED * _delta
-	
-	# 3. Применяем трение (замедление)
 	velocity *= FRICTION
-	
-	# 4. Двигаемся
-	
 	move_and_slide()
 	
-	# 5. При столкновении
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var other = collision.get_collider()
 		
 		if other is CharacterBody2D:
 			var push_dir = (position - other.position).normalized()
-			
-			# Добавляем плавную силу отталкивания
-			#velocity += push_dir * PUSH_FORCE * _delta
 			velocity += push_dir * PUSH_FORCE
-			
-			
-			# Отправляем другому
 			other.apply_push_force.rpc_id(other.get_multiplayer_authority(), -push_dir * PUSH_FORCE)
-		
 
 @rpc("any_peer", "call_local", "unreliable")
 func apply_push_force(force: Vector2):
@@ -126,11 +106,47 @@ func apply_push_force(force: Vector2):
 func reborn():
 	_reborn()
 
+@rpc("any_peer", "unreliable")
+func update_input(id: int, dir: Vector2):
+	if int(name) == id:
+		input_dir = dir
 
+@rpc("any_peer","call_local")
+func set_player_name(_name: String):
+	var sender_id = multiplayer.get_remote_sender_id()
+	if int(name) == sender_id:
+		nickname = _name
+		player_name_label.text = _name
 		
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
+func set_player_skin(_id: int):
+	print("set_player_skin вызван, _id=", _id, " name=", name)
+	var sender_id = multiplayer.get_remote_sender_id()
+	print("sender_id=", sender_id)
+	if int(name) == sender_id:
+		print("условие выполнено, устанавливаем скин")
+		skin_id = _id
+		set_skin.rpc(_id)
+	else:
+		print("условие не выполнено")
+
+#@rpc("any_peer", "call_local")
+#func set_player_skin(_id: int):
+	#var sender_id = multiplayer.get_remote_sender_id()
+	#if sender_id == 0 or int(name) == sender_id:
+		#skin_id = _id
+		#$AnimationPlayer.play(str(_id))
+
+
+
+
+
+
+
+@rpc
 func set_skin(_id):
-	#print(str(id))
+	print("set_skin called, _id: ", _id)
 	$AnimationPlayer.play(str(_id))
+	pass
 	

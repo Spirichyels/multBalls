@@ -39,7 +39,6 @@ var game_started = false:
 
 func add_player(_id:String , _name: String):
 	players[str(_id)] = {"score": 0}
-	print(ui_table)
 	ui_table.add_player_to_table(_id, _name, 0)
 	
 	
