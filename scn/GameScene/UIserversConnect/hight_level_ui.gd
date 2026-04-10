@@ -1,9 +1,7 @@
 extends Control
 
 @onready var name_label: Label = %NameLabel
-
 @onready var name_input: LineEdit = %nameInput
-
 @onready var UI_global
 
 
@@ -20,14 +18,14 @@ func _ready() -> void:
 func _on_server_pressed() -> void:
 	HightLevelNetworkHandler.start_server()
 	visible = false
-	UI_global.go_game()
+	UI_global.go_server()
 	pass # Replace with function body.
 
 
 func _on_client_pressed() -> void:
 	HightLevelNetworkHandler.start_client()
 	visible = false
-	UI_global.go_game()
+	UI_global.go_client()
 	pass # Replace with function body.
 
 	

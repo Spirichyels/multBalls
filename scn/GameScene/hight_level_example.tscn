@@ -64,6 +64,15 @@ texture_normal = ExtResource("6_kwy2f")
 texture_pressed = ExtResource("7_kwy2f")
 stretch_mode = 5
 
+[node name="StartFightButton" type="TextureButton" parent="UI_global"]
+offset_left = 125.0
+offset_top = 244.0
+offset_right = 311.0
+offset_bottom = 409.0
+texture_normal = ExtResource("6_kwy2f")
+texture_pressed = ExtResource("7_kwy2f")
+stretch_mode = 5
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." groups=["spawner"]]
 _spawnable_scenes = PackedStringArray("uid://c6fe1ciip2exe")
 spawn_path = NodePath("..")
@@ -120,6 +129,7 @@ position = Vector2(12.5, 359.5)
 shape = SubResource("RectangleShape2D_toum1")
 
 [connection signal="pressed" from="UI_global/SkinsButton" to="UI_global" method="_on_skins_button_pressed"]
+[connection signal="pressed" from="UI_global/StartFightButton" to="UI_global" method="_on_start_fight_button_pressed"]
 [connection signal="body_entered" from="fallZone/Area2D4" to="fallZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="fallZone/Area2D3" to="fallZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="fallZone/Area2D2" to="fallZone" method="_on_area_2d_body_entered"]

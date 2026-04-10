@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 
 const SPEED = 1000.0
-const PUSH_FORCE = 2000.0
+const PUSH_FORCE = 20.0
 const FRICTION = 0.99  # Трение (0.9 = 10% замедления за кадр)
 
 
@@ -79,6 +79,7 @@ func _ready() -> void:
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	
 
 func _physics_process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -109,10 +110,12 @@ func _physics_process(_delta: float) -> void:
 			var push_dir = (position - other.position).normalized()
 			
 			# Добавляем плавную силу отталкивания
-			velocity += push_dir * PUSH_FORCE * _delta
+			#velocity += push_dir * PUSH_FORCE * _delta
+			velocity += push_dir * PUSH_FORCE
+			
 			
 			# Отправляем другому
-			other.apply_push_force.rpc_id(other.get_multiplayer_authority(), -push_dir * PUSH_FORCE * _delta)
+			other.apply_push_force.rpc_id(other.get_multiplayer_authority(), -push_dir * PUSH_FORCE)
 		
 
 @rpc("any_peer", "call_local", "unreliable")

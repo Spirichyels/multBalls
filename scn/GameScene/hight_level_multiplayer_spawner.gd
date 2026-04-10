@@ -11,7 +11,9 @@ func _ready():
 			multiplayer.peer_connected.connect(spawn_player)
 		else:
 			join_refused()
-	await HightLevelNetworkHandler.game_started_changed
+	await HightLevelNetworkHandler.game_table_create_changed
+	#await HightLevelNetworkHandler.game_started_changed
+	
 	#HightLevelNetworkHandler.add_player(player.name, player.nickname)
 	for key_player in players:
 		#HightLevelNetworkHandler.add_player(players[key_player].name, players[key_player].nickname)
@@ -21,6 +23,8 @@ func _ready():
 	broadcast_players_list()
 
 func broadcast_players_list():
+	print("broadcast_players_list: ", (" сервер" if multiplayer.is_server() else " клиент"))
+		
 	# 1. Создаём пустой массив, куда сложим данные всех игроков
 	var players_data = []
 	
@@ -42,7 +46,7 @@ func create_table_rows(data: Array):
 
 
 func spawn_player(id):
-	#await HightLevelNetworkHandler.game_started_changed расскоментировать на релизе
+	await HightLevelNetworkHandler.game_started_changed #расскоментировать на релизе
 	if !multiplayer.is_server(): return
 	var player = network_player.instantiate()
 	player.name = str(id)
@@ -50,11 +54,6 @@ func spawn_player(id):
 	
 	
 	get_node(spawn_path).add_child(player)
-	#player.skin_id = HightLevelNetworkHandler.or1()
-	
-	#print(player.skin_id)
-	#player.set_skin.rpc(player.skin_id)
-	#print("player.nickname: ", player.nickname + (" сервер" if multiplayer.is_server() else " клиент"))
 	
 	
 	players[id] = player

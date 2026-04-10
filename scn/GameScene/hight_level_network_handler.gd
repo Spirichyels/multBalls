@@ -17,10 +17,20 @@ var players = {}
 var peer: ENetMultiplayerPeer
 
 signal game_started_changed
+signal game_table_create_changed
 
 
 func _ready() -> void:
 	ui_table  = get_tree().get_first_node_in_group("ui_table")
+	
+	
+#func game_table_create():
+	#game_table_create_changed.emit()
+	
+var game_table_create= false:
+	set(value):
+		game_started = value
+		game_table_create_changed.emit()
 
 var game_started = false:
 	set(value):
@@ -43,22 +53,10 @@ func broadcast_score_update(player_id: String, new_score: int):
 	ui_table.update_player_score(player_id, new_score)
 
 	
-#@rpc("call_local")
-#func broadcast_score_update(player_id, new_score):
-	## На всех клиентах обновляем строку таблицы
-	#ui_table.update_player_score(str(player_id), str(new_score))
 
 func or1():
-	#return 5
 	return player_skin
 	#return(randi()%6)
-	
-	#if player_skin == 0:
-		#player_skin = 1
-		#return 0
-	#elif player_skin == 1:
-		#player_skin = 0
-		#return 1
 	
 
 func start_server():
@@ -66,14 +64,12 @@ func start_server():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT)
 	multiplayer.multiplayer_peer = peer
-	await get_tree().create_timer(10).timeout
-	print("сервер закрылся")
+	#await get_tree().create_timer(10).timeout
+	#print("сервер закрылся")
 	game_started = true
 	
 func start_client():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(IP_ADERSS, PORT)
 	multiplayer.multiplayer_peer = peer
-	# Отправляем имя на сервер
-	#print("клиент: peer создан", peer)
 	
