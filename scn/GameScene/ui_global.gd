@@ -5,8 +5,10 @@ extends CanvasLayer
 @onready var ui_lose_window: Control = $UiLoseWindow
 @onready var ui_table: Control = $UI_table
 @onready var start_fight_button: TextureButton = $StartFightButton
+@onready var ui_players_table: Control = $UI_players_table
 
 @onready var skins_button: TextureButton = $SkinsButton
+@onready var again_button: TextureButton = $AgainButton
 
 
 
@@ -46,6 +48,8 @@ var state_ui = UI.Menu:
 				visible_false()
 				ui_table.visible = true
 				start_fight_button.visible = true
+				again_button.visible = true
+				ui_players_table.visible = true
 
 
 func visible_false():
@@ -53,8 +57,12 @@ func visible_false():
 	hight_level_ui.visible = false
 	ui_lose_window.visible = false
 	ui_table.visible = false
-	skins_button.visible = false
 	start_fight_button.visible = false
+	ui_players_table.visible = false
+	
+	skins_button.visible = false
+	again_button.visible = false
+	
 	
 
 func _ready() -> void:
@@ -81,4 +89,9 @@ func _on_start_fight_button_pressed() -> void:
 	HightLevelNetworkHandler.game_started = true
 	await get_tree().create_timer(0.5).timeout
 	HightLevelNetworkHandler.game_table_create = true
+	pass # Replace with function body.
+
+
+func _on_again_button_pressed() -> void:
+	HightLevelNetworkHandler.go_restart_game()
 	pass # Replace with function body.

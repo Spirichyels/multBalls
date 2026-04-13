@@ -1,9 +1,12 @@
 extends Node2D
 
 func _ready() -> void:
-	get_parent().set_player_name.rpc_id(1, HightLevelNetworkHandler.player_name)
+	var player = get_parent()
+	#player.set_player_name.rpc_id(1, HightLevelNetworkHandler.player_name)
+	player.set_player_name_and_skin.rpc_id(1, str(HightLevelNetworkHandler.player_name), str(HightLevelNetworkHandler.player_skin))
+	
 	print("HightLevelNetworkHandler.player_skin: ", HightLevelNetworkHandler.player_skin , (" сервер" if multiplayer.is_server() else " клиент"))
-	get_parent().set_player_skin.rpc_id(1, HightLevelNetworkHandler.player_skin)
+	#player.set_player_skin.rpc_id(1, HightLevelNetworkHandler.player_skin)
 
 func _process(_delta):
 	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")

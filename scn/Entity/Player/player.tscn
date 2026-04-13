@@ -34,7 +34,7 @@ properties/7/path = NodePath(".:nickname")
 properties/7/spawn = false
 properties/7/replication_mode = 2
 properties/8/path = NodePath(".:skin_id")
-properties/8/spawn = true
+properties/8/spawn = false
 properties/8/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_gvj62"]
@@ -247,8 +247,19 @@ theme_override_font_sizes/font_size = 20
 text = "botfghfghfghfghfghfghfghfgfdgdfgdfgdf"
 horizontal_alignment = 1
 
+[node name="player_speed_label" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = -20.754713
+offset_top = 18.867928
+offset_right = 66.037766
+offset_bottom = 46.867928
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 20
+text = "5000"
+horizontal_alignment = 1
+
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("3_r8ipl")]
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

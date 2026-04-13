@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmqc3jk3p2mc8"]
+
+[ext_resource type="Script" uid="uid://hcqe3tnwx7jq" path="res://scn/GameScene/UI_players_table/HBCstring/hb_cstring.gd" id="1_tn6mr"]
+
+[node name="HBCstring" type="HBoxContainer"]
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource("1_tn6mr")
+
+[node name="nameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "name"
+horizontal_alignment = 1
+
+[node name="connectedLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "score"
+horizontal_alignment = 1

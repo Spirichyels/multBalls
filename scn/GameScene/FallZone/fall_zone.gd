@@ -96,13 +96,21 @@ func _lose(body):
 		round_ended = true
 		for player in maxPlayers:
 			if not player.orDead:
-				show_game_over_clients.rpc(str(player.player_name_label.text))
 				HightLevelNetworkHandler.up_score_player(str(player.name),player.nickname, 1)
-				#HightLevelNetworkHandler.up_score_player(player.id, player.player_name_label.text, 1)
+				var _score = int(HightLevelNetworkHandler.get_result(str(player.name)))
 				print(HightLevelNetworkHandler.players)
 				player.orDead = true
 				kill_player.rpc(player.name)
-				next_round()
+				if _score >= HightLevelNetworkHandler.max_score_to_win:
+					show_game_over_clients.rpc(str(player.player_name_label.text))
+					await HightLevelNetworkHandler.game_again_restart
+					next_round()
+					pass
+				
+				else:
+					show_game_over_clients.rpc(str(player.player_name_label.text))
+					#HightLevelNetworkHandler.up_score_player(player.id, player.player_name_label.text, 1)
+					next_round()
 				break
 	
 	
@@ -113,11 +121,11 @@ func _lose(body):
 func next_round():
 	if not multiplayer.is_server(): return
 	if not round_ended: return
-	print("next_round это " + (" сервер" if multiplayer.is_server() else " клиент"))
+	#print("next_round это " + (" сервер" if multiplayer.is_server() else " клиент"))
 	
 	await get_tree().create_timer(1.0).timeout
 	processing.clear()
-	print("игра закончилась, запускаю рестарт сервера")
+	print("игра закончилась, запускаю рестарт игры")
 	_restart_game()
 	
 	

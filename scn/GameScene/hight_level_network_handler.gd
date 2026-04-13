@@ -10,6 +10,8 @@ var player_skin = 0
 var IP_ADERSS: String = ""
 const PORT: int = 42069
 
+var max_score_to_win = 2
+
 var players = {}
 
 
@@ -18,6 +20,7 @@ var peer: ENetMultiplayerPeer
 
 signal game_started_changed
 signal game_table_create_changed
+signal game_again_restart
 
 
 func _ready() -> void:
@@ -36,6 +39,15 @@ var game_started = false:
 	set(value):
 		game_started = value
 		game_started_changed.emit()
+		
+var game_restart = false:
+	set(value):
+		game_restart = value
+			
+func go_restart_game():
+	_null_score_player()
+	game_again_restart.emit()
+	
 
 func add_player(_id:String , _name: String):
 	players[str(_id)] = {"score": 0}
@@ -46,6 +58,15 @@ func up_score_player(_id: String, _name: String, new_score: int):
 	players[str(_id)].score += new_score
 	# После обновления счёта рассылаем новую таблицу
 	broadcast_score_update.rpc(_id, players[_id].score)
+	
+func _null_score_player():
+	for _player in players:
+		players[str(_player)].score = 0
+		broadcast_score_update.rpc(str(_player), 0)
+
+
+func get_result(_id: String):
+	return players[str(_id)].score
 
 @rpc("call_local")
 func broadcast_score_update(player_id: String, new_score: int):

@@ -38,6 +38,8 @@ func create_table_rows(data: Array):
 		HightLevelNetworkHandler.add_player(str(player_data.id), str(player_data.name))
 
 
+
+
 func spawn_player(id):
 	await HightLevelNetworkHandler.game_started_changed #расскоментировать на релизе
 	if !multiplayer.is_server(): return

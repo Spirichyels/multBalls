@@ -1,17 +1,24 @@
-[gd_scene load_steps=17 format=4 uid="uid://d1s27dsja87si"]
+[gd_scene load_steps=24 format=4 uid="uid://d1s27dsja87si"]
 
 [ext_resource type="PackedScene" uid="uid://dmj3k04r4ch06" path="res://scn/GameScene/UIserversConnect/hight_level_ui.tscn" id="1_1vour"]
 [ext_resource type="PackedScene" uid="uid://ca6p7qf4xrgrx" path="res://scn/GameScene/UI_Skins_Menu/ui_skins_menu.tscn" id="1_4mj14"]
 [ext_resource type="Script" uid="uid://bbc4fxwteddvj" path="res://scn/GameScene/ui_global.gd" id="1_kwy2f"]
+[ext_resource type="Script" uid="uid://c621qaqtc1twv" path="res://scn/GameScene/fps.gd" id="1_s1mik"]
 [ext_resource type="Script" uid="uid://csrswr52746k0" path="res://scn/GameScene/hight_level_multiplayer_spawner.gd" id="2_px42d"]
 [ext_resource type="PackedScene" uid="uid://t62lgs37ki8c" path="res://scn/GameScene/UI_lose_window/UI_lose_window.tscn" id="2_ywuwv"]
 [ext_resource type="PackedScene" uid="uid://c8c40fshpdlrd" path="res://scn/GameScene/UI_table/ui_table.tscn" id="3_4mj14"]
 [ext_resource type="PackedScene" uid="uid://c6fe1ciip2exe" path="res://scn/Entity/Player/player.tscn" id="3_ywuwv"]
 [ext_resource type="PackedScene" uid="uid://dxsccjfemldiv" path="res://scn/Wall/wall.tscn" id="4_4mj14"]
 [ext_resource type="Texture2D" uid="uid://cew4a2qgjnpew" path="res://assets/Walls/ship.png" id="5_w6t4w"]
-[ext_resource type="Texture2D" uid="uid://crs3m32nnngm4" path="res://assets/ok/ok1.png" id="6_kwy2f"]
+[ext_resource type="Texture2D" uid="uid://uxe2tkebm2ei" path="res://assets/Buttons/skins/skins1.png" id="6_1okv6"]
 [ext_resource type="Script" uid="uid://s12ekygrudbd" path="res://scn/GameScene/FallZone/fall_zone.gd" id="6_lm5om"]
-[ext_resource type="Texture2D" uid="uid://mf4xgujbxpgl" path="res://assets/ok/ok2.png" id="7_kwy2f"]
+[ext_resource type="Texture2D" uid="uid://q6jbomnkwcj8" path="res://assets/Buttons/skins/skins2.png" id="7_nqypr"]
+[ext_resource type="Texture2D" uid="uid://cbxx7mtml458m" path="res://assets/Buttons/start/start1.png" id="8_6cdfo"]
+[ext_resource type="Texture2D" uid="uid://b6xp7fldlqw8b" path="res://assets/Buttons/start/start2.png" id="9_tlex8"]
+[ext_resource type="PackedScene" uid="uid://x05poejis82" path="res://scn/GameScene/UI_players_table/UI_players_table.tscn" id="10_6cdfo"]
+[ext_resource type="Texture2D" uid="uid://bktuq208wl30b" path="res://assets/Buttons/again/again1.png" id="10_i34gp"]
+[ext_resource type="Texture2D" uid="uid://bsd0pj67lf7xu" path="res://assets/Buttons/again/again2.png" id="11_s1mik"]
+[ext_resource type="Texture2D" uid="uid://cpyxfs6c6ceu1" path="res://assets/assesprite/grass64x64.png" id="12_nqypr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlsof"]
 texture = ExtResource("5_w6t4w")
@@ -33,6 +40,25 @@ size = Vector2(27, 721)
 
 [node name="HightLevelExample" type="Node2D"]
 
+[node name="fps" type="CanvasLayer" parent="."]
+script = ExtResource("1_s1mik")
+
+[node name="fpsLabel" type="Label" parent="fps"]
+unique_name_in_owner = true
+offset_left = 41.0
+offset_top = 80.0
+offset_right = 104.0
+offset_bottom = 103.0
+text = "fps:144"
+
+[node name="pingLabel" type="Label" parent="fps"]
+unique_name_in_owner = true
+offset_left = 41.0
+offset_top = 46.0
+offset_right = 107.0
+offset_bottom = 69.0
+text = "ping:144"
+
 [node name="UI_global" type="CanvasLayer" parent="." groups=["UI_global"]]
 script = ExtResource("1_kwy2f")
 
@@ -50,7 +76,7 @@ anchor_bottom = 0.5
 visible = false
 
 [node name="UI_table" parent="UI_global" groups=["ui_table"] instance=ExtResource("3_4mj14")]
-offset_left = 832.0
+offset_left = 957.0
 offset_top = 29.0
 offset_right = -28.0
 offset_bottom = -496.0
@@ -60,24 +86,48 @@ offset_left = 1025.0
 offset_top = 481.0
 offset_right = 1211.0
 offset_bottom = 646.0
-texture_normal = ExtResource("6_kwy2f")
-texture_pressed = ExtResource("7_kwy2f")
+texture_normal = ExtResource("6_1okv6")
+texture_pressed = ExtResource("7_nqypr")
 stretch_mode = 5
 
 [node name="StartFightButton" type="TextureButton" parent="UI_global"]
-offset_left = 125.0
-offset_top = 244.0
-offset_right = 311.0
-offset_bottom = 409.0
-texture_normal = ExtResource("6_kwy2f")
-texture_pressed = ExtResource("7_kwy2f")
+offset_left = 116.0
+offset_top = 163.0
+offset_right = 302.0
+offset_bottom = 328.0
+texture_normal = ExtResource("8_6cdfo")
+texture_pressed = ExtResource("9_tlex8")
 stretch_mode = 5
+
+[node name="AgainButton" type="TextureButton" parent="UI_global"]
+offset_left = 114.0
+offset_top = 359.0
+offset_right = 300.0
+offset_bottom = 524.0
+texture_normal = ExtResource("10_i34gp")
+texture_pressed = ExtResource("11_s1mik")
+stretch_mode = 5
+
+[node name="UI_players_table" parent="UI_global" instance=ExtResource("10_6cdfo")]
+offset_left = 839.0
+offset_top = 319.0
+offset_right = -208.0
+offset_bottom = -206.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." groups=["spawner"]]
 _spawnable_scenes = PackedStringArray("uid://c6fe1ciip2exe")
 spawn_path = NodePath("..")
 script = ExtResource("2_px42d")
 network_player = ExtResource("3_ywuwv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 3
+texture_repeat = 2
+position = Vector2(641, 355)
+texture = ExtResource("12_nqypr")
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 710)
+region_filter_clip_enabled = true
 
 [node name="Spawners" type="Node2D" parent="."]
 
@@ -95,16 +145,14 @@ tile_set = SubResource("TileSet_ndluo")
 script = ExtResource("6_lm5om")
 
 [node name="Area2D4" type="Area2D" parent="fallZone"]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D4"]
 light_mask = 2
-position = Vector2(640, 690)
+position = Vector2(640, 694)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_hddet")
 
 [node name="Area2D3" type="Area2D" parent="fallZone"]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D3"]
 light_mask = 2
@@ -113,7 +161,6 @@ rotation = 1.5707964
 shape = SubResource("RectangleShape2D_hddet")
 
 [node name="Area2D2" type="Area2D" parent="fallZone"]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D2"]
 light_mask = 2
@@ -121,7 +168,6 @@ position = Vector2(1267, 360)
 shape = SubResource("RectangleShape2D_toum1")
 
 [node name="Area2D1" type="Area2D" parent="fallZone"]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fallZone/Area2D1"]
 light_mask = 2
@@ -130,6 +176,7 @@ shape = SubResource("RectangleShape2D_toum1")
 
 [connection signal="pressed" from="UI_global/SkinsButton" to="UI_global" method="_on_skins_button_pressed"]
 [connection signal="pressed" from="UI_global/StartFightButton" to="UI_global" method="_on_start_fight_button_pressed"]
+[connection signal="pressed" from="UI_global/AgainButton" to="UI_global" method="_on_again_button_pressed"]
 [connection signal="body_entered" from="fallZone/Area2D4" to="fallZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="fallZone/Area2D3" to="fallZone" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="fallZone/Area2D2" to="fallZone" method="_on_area_2d_body_entered"]
