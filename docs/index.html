@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -13,6 +13,350 @@
 	<a href="multiBalls.zip" download="multiBalls.zip">
 		<button>Скачать zip</button>
 	</a>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>MultBalls — Эпичная мультиплеерная арена</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Segoe UI', 'Poppins', 'Orbitron', 'Arial Black', sans-serif;
+			background: radial-gradient(circle at 20% 30%, #0a0f1e, #03060c);
+			min-height: 100vh;
+			color: #fff;
+			overflow-x: hidden;
+			position: relative;
+		}
+
+		/* Анимированный фон с шумом и частицами */
+		body::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="120" cy="80" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="170" cy="150" r="2.5" fill="rgba(255,255,255,0.05)"/><circle cx="80" cy="170" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+			background-repeat: repeat;
+			opacity: 0.3;
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		/* Сетка как в киберпанке */
+		body::after {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
+			background-size: 40px 40px;
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		.glow {
+			position: fixed;
+			top: -20%;
+			left: -20%;
+			width: 140%;
+			height: 140%;
+			background: radial-gradient(circle, rgba(0, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+			pointer-events: none;
+			animation: pulse 8s infinite alternate;
+			z-index: 0;
+		}
+
+		@keyframes pulse {
+			0% {
+				opacity: 0.3;
+				transform: scale(1);
+			}
+
+			100% {
+				opacity: 0.8;
+				transform: scale(1.1);
+			}
+		}
+
+		.container {
+			position: relative;
+			z-index: 2;
+			max-width: 1300px;
+			margin: 0 auto;
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			backdrop-filter: blur(2px);
+		}
+
+		/* Заголовок с неоном */
+		.hero {
+			text-align: center;
+			margin-bottom: 3rem;
+		}
+
+		h1 {
+			font-size: 5.5rem;
+			font-weight: 900;
+			letter-spacing: 8px;
+			text-transform: uppercase;
+			background: linear-gradient(135deg, #fff, #0ff, #f0f);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+			margin-bottom: 1rem;
+			animation: titleGlow 3s infinite alternate;
+		}
+
+		@keyframes titleGlow {
+			0% {
+				text-shadow: 0 0 10px cyan;
+				filter: brightness(1);
+			}
+
+			100% {
+				text-shadow: 0 0 40px magenta, 0 0 20px cyan;
+				filter: brightness(1.2);
+			}
+		}
+
+		.tagline {
+			font-size: 1.4rem;
+			color: #aaf;
+			letter-spacing: 2px;
+			word-break: keep-all;
+			background: rgba(0, 0, 0, 0.6);
+			display: inline-block;
+			padding: 0.5rem 2rem;
+			border-radius: 40px;
+			backdrop-filter: blur(8px);
+			border: 1px solid rgba(0, 255, 255, 0.4);
+		}
+
+		/* Карточки с описанием */
+		.features {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 2rem;
+			margin: 3rem 0;
+		}
+
+		.card {
+			background: rgba(10, 20, 30, 0.65);
+			backdrop-filter: blur(12px);
+			border-radius: 32px;
+			padding: 2rem 1.5rem;
+			width: 280px;
+			text-align: center;
+			border: 1px solid rgba(0, 255, 255, 0.3);
+			transition: all 0.3s ease;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+		}
+
+		.card:hover {
+			transform: translateY(-10px) scale(1.02);
+			border-color: #0ff;
+			box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+		}
+
+		.card .icon {
+			font-size: 3.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.card h3 {
+			font-size: 1.8rem;
+			margin-bottom: 0.8rem;
+			background: linear-gradient(135deg, #fff, #0ff);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+
+		.card p {
+			color: #ccc;
+			line-height: 1.4;
+		}
+
+		/* Пафосный блок с текстом */
+		.epic-text {
+			background: rgba(0, 0, 0, 0.55);
+			backdrop-filter: blur(16px);
+			border-radius: 48px;
+			padding: 2.5rem;
+			margin: 2rem 0;
+			text-align: center;
+			border: 1px solid rgba(255, 0, 255, 0.4);
+			max-width: 900px;
+		}
+
+		.epic-text p {
+			font-size: 1.2rem;
+			line-height: 1.6;
+			margin-bottom: 1rem;
+			color: #e0e0ff;
+		}
+
+		.epic-text .highlight {
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: #ff44ee;
+			text-shadow: 0 0 5px magenta;
+		}
+
+		/* Кнопки-бомба */
+		.download-section {
+			display: flex;
+			gap: 2rem;
+			flex-wrap: wrap;
+			justify-content: center;
+			margin: 2rem 0 3rem;
+		}
+
+		.btn {
+			position: relative;
+			font-size: 1.8rem;
+			font-weight: bold;
+			padding: 1rem 2.5rem;
+			border: none;
+			border-radius: 60px;
+			cursor: pointer;
+			transition: 0.2s;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			background: linear-gradient(45deg, #ff416c, #ff4b2b);
+			color: white;
+			box-shadow: 0 0 15px rgba(255, 75, 43, 0.6);
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 12px;
+			font-family: inherit;
+		}
+
+		.btn-win {
+			background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+			box-shadow: 0 0 20px #00aaff;
+			border: 1px solid #0ff;
+		}
+
+		.btn-zip {
+			background: linear-gradient(135deg, #6b0f5e, #b01e7f);
+			box-shadow: 0 0 20px #ff44ee;
+		}
+
+		.btn:hover {
+			transform: scale(1.07);
+			filter: brightness(1.1);
+			box-shadow: 0 0 35px currentColor;
+		}
+
+		.btn:active {
+			transform: scale(0.98);
+		}
+
+		.footer {
+			margin-top: 3rem;
+			font-size: 0.8rem;
+			opacity: 0.7;
+			text-align: center;
+		}
+
+		@media (max-width: 700px) {
+			h1 {
+				font-size: 2.5rem;
+				letter-spacing: 3px;
+			}
+
+			.btn {
+				font-size: 1.2rem;
+				padding: 0.7rem 1.5rem;
+			}
+
+			.card {
+				width: 100%;
+				max-width: 300px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="glow"></div>
+	<div class="container">
+		<div class="hero">
+			<h1>⚡ MULTBALLS ⚡</h1>
+			<div class="tagline">БЕСПОЩАДНАЯ PVP АРЕНА | ДО 4 ИГРОКОВ | ХАОС И ШИПЫ</div>
+		</div>
+
+		<div class="features">
+			<div class="card">
+				<div class="icon">⚔️</div>
+				<h3>Битва насмерть</h3>
+				<p>Последний выживший на арене. Шипы, толчки и никакой пощады.</p>
+			</div>
+			<div class="card">
+				<div class="icon">🌐</div>
+				<h3>P2P + Сервер</h3>
+				<p>Один запускает сервер, остальные врываются в бой. Минимальные задержки.</p>
+			</div>
+			<div class="card">
+				<div class="icon">🎨</div>
+				<h3>Кастом скины</h3>
+				<p>Выбери уникальный цвет шарика — пусть враги узнают тебя!</p>
+			</div>
+			<div class="card">
+				<div class="icon">🏆</div>
+				<h3>Рейтинг и реванш</h3>
+				<p>Автоматический рестарт через 2 секунды. Только хардкор.</p>
+			</div>
+		</div>
+
+		<div class="epic-text">
+			<p><span class="highlight">🔥 MULTBALLS — это не просто игра, это проверка рефлексов и тактики.</span> Ты —
+				шар в эпицентре битвы. Уклоняйся, толкай врагов на шипы, используй отскоки. Каждая секунда на счету.
+				Сражайся с друзьями или рандомами в безумной арене, где проигравший падает в бездну, а победитель
+				купается в славе.</p>
+			<p>⚡ Честная физика, молниеносное управление, никаких донатов — только твой скилл. Займи трон, покажи кто
+				тут главный шар!</p>
+			<p style="font-size:1rem;">🎮 Уже сотни бойцов. Нажми кнопку — присоединяйся к резне прямо сейчас!</p>
+		</div>
+
+		<div class="download-section">
+			<a href="game.exe" download="multiBalls.exe" class="btn btn-win">
+				🖥️ СКАЧАТЬ .EXE (WIN)
+			</a>
+			<a href="game.zip" download="multiBalls.zip" class="btn btn-zip">
+				📦 ZIP-ВЕРСИЯ (Портативная)
+			</a>
+		</div>
+
+		<div class="footer">
+			<p>© 2025 MultBalls — Киберспортивный хаос | Версия 1.3.7 | Требуется Windows 10+ и желание крушить</p>
+			<p style="margin-top:8px;">🔥 <a href="https://github.com/spirichyels/multBalls"
+					style="color:#0ff;">GitHub</a> | Серверная архитектура P2P</p>
+		</div>
+	</div>
 </body>
 
 </html>

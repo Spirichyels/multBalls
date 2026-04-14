@@ -2,9 +2,14 @@ extends CanvasLayer
 
 @onready var fps_label: Label = %fpsLabel
 @onready var ping_label: Label = %pingLabel
+@onready var version_lbale: Label = %versionLbale
 
 
-func _physics_process(delta: float) -> void:
+func _ready() -> void:
+	version_lbale.text =  str("Версия: ",ProjectSettings.get_setting("application/config/version"))
+
+
+func _physics_process(_delta: float) -> void:
 	fps_label.text = str(Engine.get_frames_per_second()) + " FPS"
 	
 	if multiplayer.is_server():

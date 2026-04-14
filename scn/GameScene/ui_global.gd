@@ -10,7 +10,8 @@ extends CanvasLayer
 @onready var skins_button: TextureButton = $SkinsButton
 @onready var again_button: TextureButton = $AgainButton
 
-
+@onready var max_score_to_win_label: Label = $maxScoreToWinLabel
+@onready var max_score_to_win_line_edit: LineEdit = $maxScoreToWinLineEdit
 
 
 
@@ -50,7 +51,11 @@ var state_ui = UI.Menu:
 				start_fight_button.visible = true
 				again_button.visible = true
 				ui_players_table.visible = true
+				max_score_to_win_line_edit.visible = true
 
+
+func _physics_process(_delta: float) -> void:
+	max_score_to_win_label.text = str("Очков для выигрыша: ",HightLevelNetworkHandler.max_score_to_win)
 
 func visible_false():
 	ui_skins_menu.visible = false
@@ -62,6 +67,7 @@ func visible_false():
 	
 	skins_button.visible = false
 	again_button.visible = false
+	max_score_to_win_line_edit.visible = false
 	
 	
 
@@ -89,9 +95,29 @@ func _on_start_fight_button_pressed() -> void:
 	HightLevelNetworkHandler.game_started = true
 	await get_tree().create_timer(0.5).timeout
 	HightLevelNetworkHandler.game_table_create = true
+	HightLevelNetworkHandler.max_score_to_win_update.rpc(HightLevelNetworkHandler.max_score_to_win)
 	pass # Replace with function body.
 
 
 func _on_again_button_pressed() -> void:
 	HightLevelNetworkHandler.go_restart_game()
+	HightLevelNetworkHandler.max_score_to_win_update.rpc(HightLevelNetworkHandler.max_score_to_win)
+	pass # Replace with function body.
+
+
+#func _on_max_score_to_win_line_edit_text_changed(new_text: String) -> void:
+	#if int(new_text):
+		#HightLevelNetworkHandler.max_score_to_win = int(new_text)
+		#print(int(new_text))
+		#
+	#
+	#pass # Replace with function body.
+
+
+func _on_max_score_to_win_line_edit_text_submitted(new_text: String) -> void:
+	if int(new_text):
+		HightLevelNetworkHandler.max_score_to_win = int(new_text)
+		print(int(new_text))
+		max_score_to_win_line_edit.text = ""
+		HightLevelNetworkHandler.max_score_to_win_update.rpc(HightLevelNetworkHandler.max_score_to_win)
 	pass # Replace with function body.

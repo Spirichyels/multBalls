@@ -10,7 +10,9 @@ var player_skin = 0
 var IP_ADERSS: String = ""
 const PORT: int = 42069
 
-var max_score_to_win = 2
+var max_score_to_win = 2:
+	set(value):
+		max_score_to_win = value
 
 var players = {}
 
@@ -72,7 +74,10 @@ func get_result(_id: String):
 func broadcast_score_update(player_id: String, new_score: int):
 	ui_table.update_player_score(player_id, new_score)
 
-	
+@rpc("call_local")
+func max_score_to_win_update(_new_max_score):
+	max_score_to_win = _new_max_score
+
 
 func or1():
 	return player_skin

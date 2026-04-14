@@ -102,13 +102,13 @@ func _lose(body):
 				player.orDead = true
 				kill_player.rpc(player.name)
 				if _score >= HightLevelNetworkHandler.max_score_to_win:
-					show_game_over_clients.rpc(str(player.player_name_label.text))
+					show_game_over_clients.rpc(str(player.player_name_label.text), " окончательно победил")
 					await HightLevelNetworkHandler.game_again_restart
 					next_round()
 					pass
 				
 				else:
-					show_game_over_clients.rpc(str(player.player_name_label.text))
+					show_game_over_clients.rpc(str(player.player_name_label.text)," выиграл раунд")
 					#HightLevelNetworkHandler.up_score_player(player.id, player.player_name_label.text, 1)
 					next_round()
 				break
@@ -133,10 +133,11 @@ func next_round():
 
 
 @rpc("call_local")
-func show_game_over_clients(winner):
+func show_game_over_clients(winner, text):
 	if multiplayer.is_server(): return
 	print("show_game_over_clients это " + ("сервер" if multiplayer.is_server() else "клиент"))
-	ui_lose_window.update_loser_text(str(winner, " победил"))
+	var xren= winner + text
+	ui_lose_window.update_loser_text(str(xren))
 	ui_lose_window.visible = true
 
 	
